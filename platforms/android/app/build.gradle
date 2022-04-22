@@ -17,12 +17,15 @@ android {
         }
     }
     applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            def outputFile = output.outputFile
-            if (outputFile != null && outputFile.name.equals('app-debug.apk')) {
-                def fileName = outputFile.name.replace("app-debug.apk", "weex-app.apk")
-                output.outputFile = new File(outputFile.parent, fileName)
-            }
+        // variant.outputs.each { output ->
+        //     def outputFile = output.outputFile
+        //     if (outputFile != null && outputFile.name.equals('app-debug.apk')) {
+        //         def fileName = outputFile.name.replace("app-debug.apk", "weex-app.apk")
+        //         output.outputFile = new File(outputFile.parent, fileName)
+        //     }
+        // }
+        variant.outputs.all {
+            outputFileName = "${variant.name}-${variant.versionName}.apk"
         }
     }
     signingConfigs {
@@ -77,7 +80,7 @@ dependencies {
     compile 'com.journeyapps:zxing-android-embedded:3.4.0'
     // PLUGIN GRADLE EXTENSIONS START
     compile 'com.taobao.android:weexplugin-loader:1.3'
-    compile 'com.taobao.android:weexplugin-processor:1.3'
+    annotationProcessor 'com.taobao.android:weexplugin-processor:1.3'
     compile 'com.taobao.android:weexplugin-annotation:1.3'
     // PLUGIN GRADLE EXTENSIONS END
 }
